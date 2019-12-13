@@ -13,6 +13,12 @@ const App = () => {
   // side effect in a component, you want to think about which state and/or props it should
   // sync up with, if any.
 
+  const Div = styled.div`
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  `;
+
   const [people, setPeople] = useState([]);
 
   useEffect(() => {
@@ -28,9 +34,9 @@ const App = () => {
   return (
     <div className="App">
       <h1 className="Header">React Wars</h1>
-      <div>
+      <Div>
         {people.map(people => <PeopleCard name = {people.name} birthyear = {people['birth_year']} height = {people.height}/>)}
-      </div>
+      </Div>
     </div>
   );
 }
