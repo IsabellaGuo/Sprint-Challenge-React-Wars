@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import Axios from 'axios';
+import styled from 'styled-components';
+import PeopleCard from './components/People';
+
 
 const App = () => {
   // Try to think through what state you'll need for this app before starting. Then build out
