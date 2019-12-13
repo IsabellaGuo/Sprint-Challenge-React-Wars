@@ -13,9 +13,24 @@ const App = () => {
   // side effect in a component, you want to think about which state and/or props it should
   // sync up with, if any.
 
+  const [people, setPeople] = useState([]);
+
+  useEffect(() => {
+    Axios
+    .get('https://swapi.co/api/people/')
+    .then(response => {
+      console.log(response);
+      setPeople(response.data.results);
+    })
+    .catch(error => console.log(error))
+  }, [])
+
   return (
     <div className="App">
       <h1 className="Header">React Wars</h1>
+      <div>
+        {people.map(people => <PeopleCard name = {people.name} birthyear = {people['birth_year']} height = {people.height}/>)}
+      </div>
     </div>
   );
 }
