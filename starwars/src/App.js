@@ -21,6 +21,8 @@ const App = () => {
 
   const [people, setPeople] = useState([]);
 
+  
+
   useEffect(() => {
     Axios
     .get('https://swapi.co/api/people/')
@@ -31,8 +33,25 @@ const App = () => {
     .catch(error => console.log(error))
   }, [])
 
+  const [name, setName] = useState("");
+
+  const handleChange = event => {
+    setName(event.target.value);
+  };
+  const handleSubmit = event => {
+    event.preventDefault();
+    
+  };
+
   return (
     <div className="App">
+      <form onSubmit ={event => handleSubmit(event)}>
+        <label>
+          Search:
+          <input type="text" onChange={event => handleChange(event)} />
+        </label>
+        <button>Submit!</button>
+      </form>
       <h1 className="Header">React Wars</h1>
       <Div>
         {people.map(people => <PeopleCard name = {people.name} birthyear = {people['birth_year']} height = {people.height}/>)}
