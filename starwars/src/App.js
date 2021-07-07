@@ -1,5 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
+import Axios from 'axios';
+import styled from 'styled-components';
+import PeopleCard from './components/People';
+
 
 const App = () => {
   // Try to think through what state you'll need for this app before starting. Then build out
@@ -9,9 +13,49 @@ const App = () => {
   // side effect in a component, you want to think about which state and/or props it should
   // sync up with, if any.
 
+  const Div = styled.div`
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  `;
+
+  const [people, setPeople] = useState([]);
+
+  
+
+  useEffect(() => {
+    Axios
+    .get('https://swapi.co/api/people/')
+    .then(response => {
+      console.log(response);
+      setPeople(response.data.results);
+    })
+    .catch(error => console.log(error))
+  }, [])
+
+  const [name, setName] = useState("");
+
+  const handleChange = event => {
+    setName(event.target.value);
+  };
+  const handleSubmit = event => {
+    event.preventDefault();
+    
+  };
+
   return (
     <div className="App">
+      <form onSubmit ={event => handleSubmit(event)}>
+        <label>
+          Search:
+          <input type="text" onChange={event => handleChange(event)} />
+        </label>
+        <button>Submit!</button>
+      </form>
       <h1 className="Header">React Wars</h1>
+      <Div>
+        {people.map(people => <PeopleCard name = {people.name} birthyear = {people['birth_year']} height = {people.height}/>)}
+      </Div>
     </div>
   );
 }
